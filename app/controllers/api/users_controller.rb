@@ -18,4 +18,15 @@ class Api::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     render "show.json.jb"
   end
+
+  def update
+    @user = User.find_by(id: params[:id])
+    @user.username = params[:username] || @user.username
+    @user.email = params[:email] || @user.email
+    if @user.save
+      render "show.json.jb"
+    else
+      render json: { errors: user.errors.full_messages }, status: :bad_request
+    end
+  end
 end
