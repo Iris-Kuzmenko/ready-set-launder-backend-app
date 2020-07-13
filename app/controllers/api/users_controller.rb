@@ -21,12 +21,18 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    @user.username = params[:username] || @user.username
+    @user.username = params[:username] || @ouser.username
     @user.email = params[:email] || @user.email
     if @user.save
       render "show.json.jb"
     else
       render json: { errors: user.errors.full_messages }, status: :bad_request
     end
+  end
+
+  def destroy
+    @user = User.find_by(id: params[:id])
+    @user.destroy
+    render json: { message: "User destroyed!" }
   end
 end
