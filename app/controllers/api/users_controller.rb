@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  before_action :authenticate_user, except: [:create]
+
   def create
     @user = User.new(
       username: params[:username],
@@ -9,7 +11,7 @@ class Api::UsersController < ApplicationController
     if @user.save
       render json: { message: "User created successfully" }, status: :created
     else
-      render json: { errors: user.errors.full_messages }, status: :bad_request
+      render json: { errors: @user.errors.full_messages }, status: :bad_request
     end
   end
 
@@ -20,12 +22,12 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    @user.username = params[:username] || @ouser.username
+    @user.username = params[:username] || @user.username
     @user.email = params[:email] || @user.email
     if @user.save
       render "show.json.jb"
     else
-      render json: { errors: user.errors.full_messages }, status: :bad_request
+      render json: { errors: @user.errors.full_messages }, status: :bad_request
     end
   end
 

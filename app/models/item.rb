@@ -4,6 +4,8 @@ class Item < ApplicationRecord
 
   validates :dry_setting_id, presence: true
 
+  validates :category_id, presence: true
+
   belongs_to :wash_setting
 
   belongs_to :dry_setting
