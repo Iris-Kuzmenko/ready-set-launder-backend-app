@@ -17,23 +17,35 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    render "show.json.jb"
+    if @user.id == current_user.id
+      render "show.json.jb"
+    end
   end
 
   def update
-    @user = User.find_by(id: params[:id])
-    @user.username = params[:username] || @user.username
-    @user.email = params[:email] || @user.email
+    @user = User.find_by(id: param.ids[:id])
+    if @user.id == current_user.id
+      @user.username = params[:username] || @user.username
+      @user.email = params[:email] || @user.email
+      # if params[:password]
+      #   @user.password = params[:password]
+      #   @user.password_confirmation = params[:password_confirmation]
+      # end
+    end
     if @user.save
       render "show.json.jb"
     else
-      render json: { errors: @user.errors.full_messages }, status: :bad_request
+      render json: { message: "Not updated!" }, status: :bad_request
     end
   end
 
   def destroy
     @user = User.find_by(id: params[:id])
-    @user.destroy
-    render json: { message: "User destroyed!" }
+    if @user == current_user
+      @user.destroy
+      render json: { message: "User destroyed!" }
+    else
+      render json: { message: "Unable to destroy another user!" }
+    end
   end
 end
