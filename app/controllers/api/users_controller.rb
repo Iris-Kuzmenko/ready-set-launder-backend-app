@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  before_action :authenticate_user, except: [:create]
+  # before_action :authenticate_user, except: [:create]
 
   def create
     @user = User.new(
@@ -9,9 +9,9 @@ class Api::UsersController < ApplicationController
       password_confirmation: params[:password_confirmation],
     )
     if @user.save
-      render json: { message: "User created successfully" }, status: :created
+      render "show.json.jb"
     else
-      render json: { errors: @user.errors.full_messages }, status: :bad_request
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -23,29 +23,28 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by(id: param.ids[:id])
+    @user = User.find_by(id: params[:id])
     if @user.id == current_user.id
       @user.username = params[:username] || @user.username
       @user.email = params[:email] || @user.email
-      # if params[:password]
-      #   @user.password = params[:password]
-      #   @user.password_confirmation = params[:password_confirmation]
-      # end
-    end
-    if @user.save
-      render "show.json.jb"
+      # make it so that only a user can update their own password
+      if @user.save
+        render "show.json.jb"
+      else
+        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: { message: "Not updated!" }, status: :bad_request
+      render json: { message: "Can't update items belonging to another user!" }, status: :forbidden
     end
   end
 
   def destroy
     @user = User.find_by(id: params[:id])
-    if @user == current_user
+    if @user.id == current_user.id
       @user.destroy
-      render json: { message: "User destroyed!" }
+      render json: { message: "User deleted!" }
     else
-      render json: { message: "Unable to destroy another user!" }
+      render json: {}, status: :forbidden
     end
   end
 end

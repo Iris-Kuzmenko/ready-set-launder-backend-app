@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
-  validates :name, uniqueness: true
+  validates :name, length: { minimum: 5 }
+
   validates :wash_setting_id, presence: true
 
   validates :dry_setting_id, presence: true
