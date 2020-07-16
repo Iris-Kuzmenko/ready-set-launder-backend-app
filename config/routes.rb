@@ -15,6 +15,11 @@ Rails.application.routes.draw do
     patch "/items/:id" => "items#update"
     delete "/items/:id" => "items#destroy"
 
+    get "/wash_settings" => "wash_settings#index"
+    get "/dry_settings" => "dry_settings#index"
+
+    get "/categories" => "categories#index"
+
     post "/sessions" => "sessions#create"
   end
 end

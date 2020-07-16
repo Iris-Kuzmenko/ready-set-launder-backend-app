@@ -1,0 +1,6 @@
+@wash_settings.map do |setting|
+  {
+    id: setting.id,
+    name: setting.name,
+  }
+end
