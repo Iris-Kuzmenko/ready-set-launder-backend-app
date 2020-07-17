@@ -1,4 +1,6 @@
 class Api::ItemsController < ApplicationController
+  before_action :authenticate_user
+
   def index
     @items = current_user.items
     render "index.json.jb"
@@ -41,7 +43,7 @@ class Api::ItemsController < ApplicationController
         render json: { message: @item.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { message: "Can't update another user's items!" }
+      render json: { message: "Can't update another user's item!" }, status: :unauthorized
     end
   end
 
@@ -52,4 +54,14 @@ class Api::ItemsController < ApplicationController
       render json: { message: "Item destroyed!" }
     end
   end
+
+  def status_update
+    eval(params[:item_ids]).each do |item_id|
+      Item.find_by(id: item_id).update(status: params[:status])
+    end
+    @items = current_user.items
+    render "index.json.jb"
+  end
 end
+
+# remove eval in frontend

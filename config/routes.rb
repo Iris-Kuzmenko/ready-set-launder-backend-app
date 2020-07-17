@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get "/items/:id" => "items#show"
     patch "/items/:id" => "items#update"
     delete "/items/:id" => "items#destroy"
+    patch "/items_status" => "items#status_update"
 
     get "/wash_settings" => "wash_settings#index"
     get "/dry_settings" => "dry_settings#index"

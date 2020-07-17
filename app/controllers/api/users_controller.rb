@@ -27,7 +27,9 @@ class Api::UsersController < ApplicationController
     if @user.id == current_user.id
       @user.username = params[:username] || @user.username
       @user.email = params[:email] || @user.email
-      # make it so that only a user can update their own password
+      # if @user.authenticate(params[:current_password])
+      #   @user.password = params[:new_password]
+      # end
       if @user.save
         render "show.json.jb"
       else
