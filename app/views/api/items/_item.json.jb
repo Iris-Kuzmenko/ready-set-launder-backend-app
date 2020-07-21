@@ -1,10 +1,9 @@
 {
   id: item.id,
   name: item.name,
-  wash_setting_id: item.wash_setting_id,
-  dry_setting_id: item.dry_setting_id,
-  category_id: item.category_id,
-  user_id: item.user_id,
+  wash_setting_id: item.wash_setting.name,
+  dry_setting_id: item.dry_setting.name,
+  category_id: item.category.name,
+  user_id: item.user.name,
   status: item.status,
-
 }

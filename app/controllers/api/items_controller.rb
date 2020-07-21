@@ -1,4 +1,5 @@
 class Api::ItemsController < ApplicationController
+  
   before_action :authenticate_user
 
   def index
@@ -62,6 +63,7 @@ class Api::ItemsController < ApplicationController
     @items = current_user.items
     render "index.json.jb"
   end
+
 end
 
 # remove eval in frontend

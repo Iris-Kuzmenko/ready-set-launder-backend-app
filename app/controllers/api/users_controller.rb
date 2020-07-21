@@ -1,4 +1,5 @@
 class Api::UsersController < ApplicationController
+
   before_action :authenticate_user, except: [:create]
 
   def create
@@ -49,4 +50,5 @@ class Api::UsersController < ApplicationController
       render json: {}, status: :forbidden
     end
   end
+  
 end

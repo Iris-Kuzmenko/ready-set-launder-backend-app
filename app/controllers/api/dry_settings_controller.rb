@@ -5,4 +5,5 @@ class Api::DrySettingsController < ApplicationController
     @dry_settings = DrySetting.all
     render "index.json.jb"
   end
+  
 end

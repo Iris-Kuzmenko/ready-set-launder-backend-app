@@ -5,4 +5,5 @@ class Api::CategoriesController < ApplicationController
     @categories = Category.all
     render "index.json.jb"
   end
+  
 end
