@@ -1,3 +1,4 @@
 @items.map do |item|
-  render partial: "item.json.jb", locals: { item: item }
+  item_hash = render partial: "item.json.jb", locals: { item: item }
+  item_hash[:wash_setting_name] = item.wash_setting.name
 end
