@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  validates :name, length: { minimum: 5 }
+  validates :name, length: { minimum: 2 }
 
   belongs_to :wash_setting
 
