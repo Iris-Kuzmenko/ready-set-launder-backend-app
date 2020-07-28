@@ -60,12 +60,10 @@ class Api::ItemsController < ApplicationController
   end
 
   def status_update
-    eval(params[:item_ids]).each do |item_id|
+    params[:item_ids].each do |item_id|
       Item.find_by(id: item_id).update(status: params[:status])
     end
     @items = current_user.items
     render "index.json.jb"
   end
 end
-
-# remove eval in frontend

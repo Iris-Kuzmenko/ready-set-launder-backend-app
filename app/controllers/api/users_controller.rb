@@ -1,5 +1,4 @@
 class Api::UsersController < ApplicationController
-
   before_action :authenticate_user, except: [:create]
 
   def create
@@ -17,38 +16,24 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params[:id])
-    if @user.id == current_user.id
-      render "show.json.jb"
-    end
+    @user = current_user
+    render "show.json.jb"
   end
 
   def update
-    @user = User.find_by(id: params[:id])
-    if @user.id == current_user.id
-      @user.username = params[:username] || @user.username
-      @user.email = params[:email] || @user.email
-      # if @user.authenticate(params[:current_password])
-      #   @user.password = params[:new_password]
-      # end
-      if @user.save
-        render "show.json.jb"
-      else
-        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-      end
+    @user = current_user
+    @user.username = params[:username] || @user.username
+    @user.email = params[:email] || @user.email
+    if @user.save
+      render "show.json.jb"
     else
-      render json: { message: "Can't update items belonging to another user!" }, status: :forbidden
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @user = User.find_by(id: params[:id])
-    if @user.id == current_user.id
-      @user.destroy
-      render json: { message: "User deleted!" }
-    else
-      render json: {}, status: :forbidden
-    end
+    @user = current_user
+    @user.destroy
+    render json: { message: "User deleted!" }
   end
-  
 end
