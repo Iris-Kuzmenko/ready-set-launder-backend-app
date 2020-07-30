@@ -2,5 +2,6 @@
   {
     id: setting.id,
     name: setting.name,
+    image_url: setting.image_url
   }
 end
