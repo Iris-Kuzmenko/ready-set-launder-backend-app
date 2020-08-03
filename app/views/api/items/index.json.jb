@@ -3,6 +3,5 @@
   item_hash[:category_name] = item.category.name
   item_hash[:wash_setting_name] = item.wash_setting.name
   item_hash[:dry_setting_name] = item.dry_setting.name
-  item_hash[:updated_at] = item.updated_at
   item_hash
 end
