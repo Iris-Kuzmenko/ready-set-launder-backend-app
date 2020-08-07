@@ -1,6 +1,6 @@
 Item.create!([
   {
-    name: "red T-shirt", wash_setting_id: 2, dry_setting_id: 1, category_id: 1, user_id: 2,
+    name: "grey T-shirt", wash_setting_id: 2, dry_setting_id: 1, category_id: 1, user_id: 2,
   },
   {
     name: "blue long-sleeved tee", wash_setting_id: 2, dry_setting_id: 2, category_id: 1, user_id: 2,
